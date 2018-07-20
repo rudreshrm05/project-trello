@@ -1,10 +1,14 @@
 import requests
 import json
 
-def get_id(key, token, board_url):
-	resp = requests.get(board_url+".json", params=dict(key=key, token=token))
+def get_id(key, token, board_name, org_name):
+	resp = requests.get("https://api.trello.com/1/organizations/%s/boards" % (org_name), params=dict(key=key, token=token))
 	resp.raise_for_status()
 	respo=json.loads(resp.content)
-	print(respo['id'])
+	for board in respo:
+	  if board_name==board['name']:
+	     print(board['id'])
 
-get_id(key="15610bbe7d43a41240679410cdfbcf44", token="511b4c4f867f79ec67ccfcb66f2b097640c6f3165c1fbf2d5a81369bc6b7c67d", board_url="https://trello.com/b/7O4Syx07/ruggear-10")
+get_id(key="15610bbe7d43a41240679410cdfbcf44", token="511b4c4f867f79ec67ccfcb66f2b097640c6f3165c1fbf2d5a81369bc6b7c67d", board_name="b1", org_name="exorg1")
+
+
