@@ -106,6 +106,15 @@ def new_card(card_name, list_name, desc):
 	else:
 	  return
 
+def delete_card(card_name, list_name):
+	global list_id
+	list_id=get_listid(list_name)
+	cid=get_cardid(card_name)
+	resp = requests.delete("https://api.trello.com/1/cards/%s" % (cid), params=dict(key=API_KEY, token=TOKEN))
+	resp.raise_for_status()
+	json.loads(resp.content)
+
+
 	
 	
 	
