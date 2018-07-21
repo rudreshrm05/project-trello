@@ -26,6 +26,7 @@ def get_boardid(board_name, org_name):
 	       return ""+board['id']
 	       break;
 	except:
+	  print("operation failed")
 	  exit(1)
 
 
@@ -38,6 +39,7 @@ def new_list(list_name):
 	  else:
 	    return
 	except:
+	  print("operation failed")
 	  exit(1)
 
 
@@ -58,6 +60,7 @@ def isLexist(list_name):
 	  else:
 	    return False
 	except:
+	  print("operation failed")
 	  exit(1)
 
 
@@ -78,6 +81,7 @@ def isCexist(card_name):
 	  else:
 	    return False
 	except:
+	  print("operation failed")
 	  exit(1)
 		
 
@@ -90,6 +94,7 @@ def get_listid(list_name):
 		  if list_name==li['name']:
 		    return ""+li['id']
 	except:
+	  print("operation failed")
 	  exit(1)
 
 
@@ -103,6 +108,7 @@ def get_cardid(card_name):
 		  if card_name==ca['name']:
 		    return ""+ca['id']
 	except:
+	  print("operation failed")
 	  exit(1)
  
 
@@ -113,6 +119,7 @@ def add_comment(card_name, comment):
 	  resp.raise_for_status()
 	  json.loads(resp.content)
 	except:
+	  print("operation failed")
 	  exit(1)
 
 	
@@ -129,6 +136,7 @@ def new_card(card_name, list_name, desc=None):
 	  else:
 	    return
 	except:
+	  print("operation failed")
 	  exit(1)
 
 def delete_card(card_name, list_name):
@@ -140,6 +148,7 @@ def delete_card(card_name, list_name):
 	  resp.raise_for_status()
 	  json.loads(resp.content)
 	except:
+	  print("operation failed")
 	  exit(1)
 
 
