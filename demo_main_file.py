@@ -117,7 +117,7 @@ def add_comment(card_name, comment):
 
 	
 
-def new_card(card_name, list_name, desc):
+def new_card(card_name, list_name, desc=None):
 	try:
 	  global list_id
 	  list_id=get_listid(list_name)
