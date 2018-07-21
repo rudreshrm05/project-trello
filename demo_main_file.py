@@ -1,34 +1,21 @@
 from trello import *
 
 user=TrelloClient(api_key=" ",token=" ")
+API_KEY=""
+TOKEN=""
 board_id=""
-lname=""
-cname=""
-cdesc=""
-ccomment=""
-lid=""
-apikey=""
-tok=""
+list_id=""
 
-def create(key, token, board_name, org_name, list_name, card_name, card_description, card_comment):#just invoke this method rest will take care all by itself
+
+def initialize(apikey, token, board_name, org_name):
 	global key
-	apikey=key
+	API_KEY=key
 	global tok
-	tok=token
+	TOKEN=token
 	global user
-	user = TrelloClient(api_key=apikey,token=tok)
+	user = TrelloClient(api_key=API_KEY,token=TOKEN)
 	global board_id
 	board_id=get_boardid(board_name=board_name, org_name=org_name)
-	global lname
-	lname=list_name
-	global cname
-	cname=card_name
-	global cdesc
-	cdesc=card_description
-	global ccomment
-	ccomment=card_comment
-	new_list()
-	new_card()
 	
 
 def get_boardid(board_name, org_name):
@@ -41,58 +28,84 @@ def get_boardid(board_name, org_name):
 	     break;
 
 
-def new_list():#if list 'lname' not exists:creates a list 'lname' else return back to create
-	if not isLexist():
-	  nl=Board(client=user,board_id=board_id)
-	  nl.add_list(lname)
+def new_list(list_name):
+	if not isLexist(list_name):
+	  nl=Board(client=user, board_id=board_id)
+	  nl.add_list(list_name)
 	else:
 	  return
 
-def isLexist():
-	li_name="<List "+lname+">"
-	l=Board(client=user, board_id=board_id)
-	all_lists=l.all_lists()
-	lst=''.join(str(all_lists))
-	if li_name in lst:
-	  return True
-	else:
-	  return False
 
-def isCexist():
-	cr_name="<Card "+cname+">"
-	c=List(board=user,list_id=lid)
-	all_c=c.list_cards(card_filter="all")
-	clst=''.join(str(all_c))
-	print(clst)
-	if cr_name in clst:
-	  return True
-	else:
-	  return False
-	
-
-
-def get_listid():
-	resp = requests.get("https://api.trello.com/1/boards/%s/lists" % (board_id), params=dict(key=apikey, token=tok))
+def isLexist(list_name):
+	flag=False
+	resp=request.get("https://api.trello.com/1/boards/%s/lists") % (board_id), params=dict(key=API_KEY, token=TOKEN))
 	resp.raise_for_status()
 	respo=json.loads(resp.content)
-	print respo
+	for lst in respo:
+	  if list_name==lst['name']
+	    flag=True
+	  else:
+	    continue
+
+	if flag==True:
+	  return True
+	else:
+	  return False:
+
+
+def isCexist(card_name):
+	flag=False
+	resp = requests.get("https://api.trello.com/1/lists/%s/cards" % (list_id), params=dict(key=API_KEY, token=TOKEN))
+	resp.raise_for_status()
+	respo=json.loads(resp.content)
+	for ca in respo:
+	  if card_name==ca['name']:
+	    flag=True
+	  else:
+	    continue
+
+	if flag==True:
+	  return True
+	else:
+	  return False:
+		
+
+def get_listid(list_name):
+	resp = requests.get("https://api.trello.com/1/boards/%s/lists" % (board_id), params=dict(key=API_KEY, token=TOKEN))
+	resp.raise_for_status()
+	respo=json.loads(resp.content)
 	for li in respo:
 		if lname==li['name']:
-		  return li['id']
+		  return ""+li['id']
+
+
+
+def get_cardid(card_name):
+	resp = requests.get("https://api.trello.com/1/lists/%s/cards" % (list_id), params=dict(key=API_KEY, token=TOKEN))
+	resp.raise_for_status()
+	respo=json.loads(resp.content)
+	for ca in respo:
+		if cname==ca['name']:
+		  return ""+ca['id']
+
+
+def add_comment(card_name, comment):
+	cid=get_cardid(card_name)
+	resp = requests.post("https://api.trello.com/1/cards/%s/actions/comments" % (cid), params=dict(key=API_KEY, token=TOKEN), data=dict(text=comment))
+	resp.raise_for_status()
+	json.loads(resp.content)
 
 	
 
-def new_card():#if card 'cname' not exists create a card 'cname' else quit
-	global lid
-	lid=get_listid()
-	if not isCexist():
+def new_card(card_name, list_name, desc):
+	global list_id
+	list_id=get_listid(list_name)
+	if not isCexist(card_name):
 	  l=List(board=user, list_id=lid)
-	  l.add_card(name=cname, desc=cdesc, position="top")#no comment parameter in the lib so ill add the comment later
+	  l.add_card(name=card_name, desc=desc, position="top")	  
 	else:
-	  exit(0)
+	  return
 
-#pending tasks: creating a delete method(to delete card) and updating comment of the card
-#feeling sleepy bro its almost 1am, ill do these two tasks in the morning ;)
 	
 	
 	
