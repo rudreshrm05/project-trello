@@ -26,8 +26,8 @@ def get_boardid(board_name, org_name):
 	       return ""+board['id']
 	       break;
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("get_boardid: operation failed")
+	    exit(1)
 
 
 def new_list(list_name):
@@ -39,8 +39,8 @@ def new_list(list_name):
 	  else:
 	    return
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("new_list: operation failed")
+	    exit(1)
 
 
 def isLexist(list_name):
@@ -60,8 +60,8 @@ def isLexist(list_name):
 	  else:
 	    return False
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("isLexist: operation failed")
+	    exit(1)
 
 
 def isCexist(card_name):
@@ -81,8 +81,8 @@ def isCexist(card_name):
 	  else:
 	    return False
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("isCexist: operation failed")
+            exit(1)
 		
 
 def get_listid(list_name):
@@ -94,8 +94,8 @@ def get_listid(list_name):
 		  if list_name==li['name']:
 		    return ""+li['id']
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("get_listid: operation failed")
+	    exit(1)
 
 
 
@@ -108,8 +108,8 @@ def get_cardid(card_name):
 		  if card_name==ca['name']:
 		    return ""+ca['id']
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("get_cardid: operation failed")
+	    exit(1)
  
 
 def add_comment(card_name, comment):
@@ -119,8 +119,8 @@ def add_comment(card_name, comment):
 	  resp.raise_for_status()
 	  json.loads(resp.content)
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("add_comment: operation failed")
+	    exit(1)
 
 	
 
@@ -136,8 +136,8 @@ def new_card(card_name, list_name, desc=None):
 	  else:
 	    return
 	except:
-	  print("operation failed")
-	  exit(1)
+            print("new_card: operation failed")
+	    exit(1)
 
 def delete_card(card_name, list_name):
 	try:
@@ -148,24 +148,5 @@ def delete_card(card_name, list_name):
 	  resp.raise_for_status()
 	  json.loads(resp.content)
 	except:
-	  print("operation failed")
-	  exit(1)
-
-
-	
-	
-	
-
-	
-	  
-
-
-	
-	
-
-
-
-
-
-
-
+            print("delete_card: operation failed")
+	    exit(1)
