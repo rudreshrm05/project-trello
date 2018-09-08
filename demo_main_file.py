@@ -150,3 +150,14 @@ def delete_card(card_name, list_name):
 	except:
             print("delete_card: operation failed")
 	    exit(1)
+
+def add_label(card_name, label_color, label_name):
+	try:
+	  cid=get_cardid(card_name)
+	  resp = requests.post("https://api.trello.com/1/cards/%s/labels" % (cid), params=dict(key=API_KEY, token=TOKEN), data=dict(color=label_color, name=label_name))
+	  resp.raise_for_status()
+	  json.loads(resp.content)
+	except:
+	  print("add_label: operation failed")
+	  exit(1)
+	  
